@@ -26,26 +26,6 @@ jobs:
           # Override outdated archive copies with the current published catalog and PDF.
           cp papers.json public/papers.json
           cp beyond-the-grave.pdf public/beyond-the-grave.pdf
-          # Always publish the same canonical stylesheet and site assets.
-          cp styles.css public/styles.css
-          cp script.js public/script.js
-          cp reader.js public/reader.js
-          cp reader.html public/reader.html
-          cp research-list.js public/research-list.js
-          # Restore the approved cream masthead and dark lettering, regardless of archive theme.
-          python3 - <<'PY'
-          from pathlib import Path
-          import re
-          for p in Path('public').rglob('*.html'):
-              if p.name == 'index.html' and 'beyond-the-grave' in p.parts:
-                  continue
-              s = p.read_text(encoding='utf-8')
-              # Site's inline masthead styling takes priority over inherited dark theme.
-              if 'Lacuna' in s and 'Conscience' in s:
-                  patch = '<style id="lacuna-locked-masthead">.hero,.hero-frame,.hero-section,.masthead,.hero-banner{background:#f8f3ea!important;color:#211711!important}.hero h1,.hero h1 *, .hero-title,.hero-title *, .masthead h1,.masthead h1 *, .hero-frame h1,.hero-frame h1 *{color:#211711!important;text-shadow:none!important}</style>'
-                  s = s.replace('</head>',patch+'</head>',1)
-                  p.write_text(s,encoding='utf-8')
-          PY
           # Use relative navigation so the site works at the account's root URL.
           python3 - <<'PY'
           from pathlib import Path
@@ -68,8 +48,6 @@ jobs:
               if 'beyond-the-grave' in data:
                   data['beyond-the-grave']['file'] = 'beyond-the-grave.pdf'
               catalog.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding='utf-8')
-          # Lock the visual theme to the version-controlled stylesheet.
-          assert (root / 'styles.css').read_bytes() == Path('styles.css').read_bytes()
           reader = (root / 'reader.html').read_text(encoding='utf-8')
           reader = reader.replace('<head>', '<head><base href="../">', 1)
           reader = reader.replace('href="lavanya/research/"', 'href="research.html"')
