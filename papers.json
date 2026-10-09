@@ -1,0 +1,26 @@
+{
+  "beyond-the-grave": {
+    "title": "Beyond the Grave",
+    "description": "Post-death dignity, legal protection and whether the dead can meaningfully be harmed in law.",
+    "status": "published",
+    "file": "papers/beyond-the-grave.pdf"
+  },
+  "from-rights-to-reality": {
+    "title": "From Rights to Reality",
+    "description": "Women’s rights beyond a single country: the distance between formal guarantees and lived freedom.",
+    "status": "development",
+    "file": "papers/from-rights-to-reality.pdf"
+  },
+  "justice-the-law-couldnt-give": {
+    "title": "Justice, the Law Couldn’t Give",
+    "description": "Victims, retaliation and whether punishment is legitimate only when imposed by the state.",
+    "status": "planned",
+    "file": "papers/justice-the-law-couldnt-give.pdf"
+  },
+  "the-sins-of-indian-society": {
+    "title": "The Sins of Indian Society",
+    "description": "Can an entire society be guilty? Dowry, gendered freedom, family honour and social surveillance.",
+    "status": "planned",
+    "file": "papers/the-sins-of-indian-society.pdf"
+  }
+}

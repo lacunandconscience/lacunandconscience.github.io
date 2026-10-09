@@ -1,0 +1,11 @@
+LACUNA & CONSCIENCE — GITHUB PAGES EDITION
+
+This version does NOT use Netlify or ChatGPT for hosting.
+
+To publish under your own account: connect GitHub, create a public repository, upload these files to its root on main, then Settings > Pages > Source: GitHub Actions. The included workflow publishes the site on every push.
+
+To edit after publishing: open YOUR-GITHUB-PAGES-URL/admin/ and connect the repository with a fine-grained GitHub token limited to that repository with Contents: Read and write. Do not share tokens. The editor can update papers, upload PDFs and edit HTML/CSS; it is not drag-and-drop.
+
+A GitHub Pages project URL is https://USERNAME.github.io/REPOSITORY/. Your website and PDF reader use relative links to support this subpath.
+
+No ChatGPT subscription is required after setup.
