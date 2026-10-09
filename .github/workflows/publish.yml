@@ -26,6 +26,12 @@ jobs:
           # Override outdated archive copies with the current published catalog and PDF.
           cp papers.json public/papers.json
           cp beyond-the-grave.pdf public/beyond-the-grave.pdf
+          # Always publish the same canonical stylesheet and site assets.
+          cp styles.css public/styles.css
+          cp script.js public/script.js
+          cp reader.js public/reader.js
+          cp reader.html public/reader.html
+          cp research-list.js public/research-list.js
           # Use relative navigation so the site works at the account's root URL.
           python3 - <<'PY'
           from pathlib import Path
@@ -48,6 +54,8 @@ jobs:
               if 'beyond-the-grave' in data:
                   data['beyond-the-grave']['file'] = 'beyond-the-grave.pdf'
               catalog.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding='utf-8')
+          # Lock the visual theme to the version-controlled stylesheet.
+          assert (root / 'styles.css').read_bytes() == Path('styles.css').read_bytes()
           reader = (root / 'reader.html').read_text(encoding='utf-8')
           reader = reader.replace('<head>', '<head><base href="../">', 1)
           reader = reader.replace('href="lavanya/research/"', 'href="research.html"')
