@@ -55,6 +55,7 @@ jobs:
           (short_dir / 'index.html').write_text(reader, encoding='utf-8')
           reader_js = (root / 'reader.js').read_text(encoding='utf-8')
           reader_js = reader_js.replace("new URLSearchParams(location.search).get('paper')", "'beyond-the-grave'")
+          reader_js = reader_js.replace('new URL(paper.file, location.href)', 'new URL(paper.file, document.baseURI)')
           (root / 'reader-short.js').write_text(reader_js, encoding='utf-8')
           research_js = root / 'research-list.js'
           if research_js.exists():
