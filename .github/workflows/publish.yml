@@ -57,6 +57,33 @@ jobs:
 }
 """,encoding='utf-8')
           PY
+          # Restore the polka-dot closing panel on The Unsettled only.
+          python3 - <<'PY'
+          from pathlib import Path
+          css=Path('public/styles.css')
+          css.write_text(css.read_text(encoding='utf-8')+"""
+/* The Unsettled: original cream polka-dot closing statement. */
+body.unsettled-page .manifesto,body.polka-page .manifesto{
+  background-color:#f7f3e9!important;
+  background-image:radial-gradient(circle,#8d6964 1.8px,transparent 2px)!important;
+  background-size:25px 25px!important;
+  color:#2c1b15!important;
+}
+body.unsettled-page .manifesto-inner,body.polka-page .manifesto-inner{
+  background:transparent!important;box-shadow:none!important;
+}
+body.unsettled-page .manifesto blockquote,body.polka-page .manifesto blockquote{
+  color:#2c1b15!important;text-shadow:none!important;
+}
+body.unsettled-page .manifesto cite,body.polka-page .manifesto cite{
+  color:#5b453b!important;
+}
+""",encoding='utf-8')
+          page=Path('public/questions.html')
+          html=page.read_text(encoding='utf-8')
+          html=html.replace('<body','<body class="unsettled-page"' ,1) if '<body class=' not in html else html.replace('<body class="','<body class="unsettled-page ',1)
+          page.write_text(html,encoding='utf-8')
+          PY
           # Use relative navigation so the site works at the account's root URL.
           python3 - <<'PY'
           from pathlib import Path
