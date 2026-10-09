@@ -35,6 +35,37 @@ jobs:
                   if updated != content:
                       p.write_text(updated, encoding='utf-8')
           PY
+          # Short, readable research paper URL, while retaining the existing reader.
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          root = Path('public')
+          catalog = root / 'papers.json'
+          if catalog.exists():
+              data = json.loads(catalog.read_text(encoding='utf-8'))
+              if 'beyond-the-grave' in data:
+                  data['beyond-the-grave']['file'] = 'beyond-the-grave.pdf'
+              catalog.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding='utf-8')
+          reader = (root / 'reader.html').read_text(encoding='utf-8')
+          reader = reader.replace('<head>', '<head><base href="../">', 1)
+          reader = reader.replace('href="lavanya/research/"', 'href="research.html"')
+          reader = reader.replace('<script src="reader.js?v=2"></script>', '<script src="reader-short.js"></script>')
+          short_dir = root / 'beyond-the-grave'
+          short_dir.mkdir(exist_ok=True)
+          (short_dir / 'index.html').write_text(reader, encoding='utf-8')
+          reader_js = (root / 'reader.js').read_text(encoding='utf-8')
+          reader_js = reader_js.replace("new URLSearchParams(location.search).get('paper')", "'beyond-the-grave'")
+          (root / 'reader-short.js').write_text(reader_js, encoding='utf-8')
+          research_js = root / 'research-list.js'
+          if research_js.exists():
+              script = research_js.read_text(encoding='utf-8')
+              script = script.replace("a.href=(location.pathname.includes('/lavanya/research/')?'../../reader.html':'reader.html')+'?paper='+encodeURIComponent(id);", "a.href=id==='beyond-the-grave'?'beyond-the-grave/':'reader.html?paper='+encodeURIComponent(id);")
+              research_js.write_text(script, encoding='utf-8')
+          research_html = root / 'research.html'
+          if research_html.exists():
+              html = research_html.read_text(encoding='utf-8').replace('reader.html?paper=beyond-the-grave', 'beyond-the-grave/')
+              research_html.write_text(html, encoding='utf-8')
+          PY
       - uses: actions/configure-pages@v5
         with:
           enablement: true
