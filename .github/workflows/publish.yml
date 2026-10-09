@@ -32,6 +32,20 @@ jobs:
           cp reader.js public/reader.js
           cp reader.html public/reader.html
           cp research-list.js public/research-list.js
+          # Restore the approved cream masthead and dark lettering, regardless of archive theme.
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          for p in Path('public').rglob('*.html'):
+              if p.name == 'index.html' and 'beyond-the-grave' in p.parts:
+                  continue
+              s = p.read_text(encoding='utf-8')
+              # Site's inline masthead styling takes priority over inherited dark theme.
+              if 'Lacuna' in s and 'Conscience' in s:
+                  patch = '<style id="lacuna-locked-masthead">.hero,.hero-frame,.hero-section,.masthead,.hero-banner{background:#f8f3ea!important;color:#211711!important}.hero h1,.hero h1 *, .hero-title,.hero-title *, .masthead h1,.masthead h1 *, .hero-frame h1,.hero-frame h1 *{color:#211711!important;text-shadow:none!important}</style>'
+                  s = s.replace('</head>',patch+'</head>',1)
+                  p.write_text(s,encoding='utf-8')
+          PY
           # Use relative navigation so the site works at the account's root URL.
           python3 - <<'PY'
           from pathlib import Path
