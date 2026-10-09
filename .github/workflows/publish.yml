@@ -23,6 +23,9 @@ jobs:
           mkdir -p public
           unzip -oq "Lacuna-and-Conscience-GITHUB-PAGES (5).zip" -d public
           test -f public/index.html
+          # Override outdated archive copies with the current published catalog and PDF.
+          cp papers.json public/papers.json
+          cp beyond-the-grave.pdf public/beyond-the-grave.pdf
           # Use relative navigation so the site works at the account's root URL.
           python3 - <<'PY'
           from pathlib import Path
@@ -55,6 +58,7 @@ jobs:
           reader_js = (root / 'reader.js').read_text(encoding='utf-8')
           reader_js = reader_js.replace("new URLSearchParams(location.search).get('paper')", "'beyond-the-grave'")
           reader_js = reader_js.replace('new URL(paper.file, location.href)', 'new URL(paper.file, document.baseURI)')
+          reader_js = reader_js.replace("fetch('papers.json'", "fetch(new URL('papers.json', document.baseURI)" )
           (root / 'reader-short.js').write_text(reader_js, encoding='utf-8')
           research_js = root / 'research-list.js'
           if research_js.exists():
