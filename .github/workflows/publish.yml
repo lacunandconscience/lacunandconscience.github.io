@@ -23,6 +23,18 @@ jobs:
           mkdir -p public
           unzip -oq "Lacuna-and-Conscience-GITHUB-PAGES (5).zip" -d public
           test -f public/index.html
+          # GitHub Pages hosts this project under /lacuna-and-conscience/,
+          # so links beginning at /lavanya/ would incorrectly point to the domain root.
+          python3 - <<'PY'
+          from pathlib import Path
+          for p in Path('public').rglob('*'):
+              if p.is_file() and p.suffix in ('.html', '.js'):
+                  content = p.read_text(encoding='utf-8')
+                  target = '../../research.html' if p.parent.as_posix().endswith('lavanya/research') else 'research.html'
+                  updated = content.replace('/lavanya/research/', target)
+                  if updated != content:
+                      p.write_text(updated, encoding='utf-8')
+          PY
       - uses: actions/configure-pages@v5
         with:
           enablement: true
