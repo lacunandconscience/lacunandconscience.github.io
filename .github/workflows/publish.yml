@@ -130,6 +130,10 @@ jobs:
           if research_html.exists():
               html = research_html.read_text(encoding='utf-8').replace('reader.html?paper=beyond-the-grave', 'beyond-the-grave/')
               research_html.write_text(html, encoding='utf-8')
+          # Keep the old bookmarked research address on the current catalog.
+          legacy = root / 'lavanya' / 'research' / 'index.html'
+          legacy.parent.mkdir(parents=True, exist_ok=True)
+          legacy.write_text('<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=../../research.html"><title>Research — Lacuna &amp; Conscience</title></head><body><a href="../../research.html">Open research papers</a></body></html>', encoding='utf-8')
           PY
       - uses: actions/configure-pages@v5
         with:
