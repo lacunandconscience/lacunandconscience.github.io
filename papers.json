@@ -11,10 +11,16 @@
     "status": "published",
     "file": "papers/justice-the-law-couldnt-give.pdf"
   },
-  "the-sins-of-indian-society": {
-    "title": "The Sins of Indian Society",
-    "description": "Can an entire society be guilty? Dowry, gendered freedom, family honour and social surveillance.",
+  "guilty-before-trial": {
+    "title": "Guilty Before Trial",
+    "description": "False accusations against men, barriers to justice for victims, and social media acting as judge.",
     "status": "development",
-    "file": "papers/the-sins-of-indian-society.pdf"
+    "file": "papers/guilty-before-trial.pdf"
+  },
+  "from-rights-to-reality": {
+    "title": "From Rights to Reality",
+    "description": "Failures of legal protection against violence towards women, the history of women in Afghanistan, and education as a path to freedom.",
+    "status": "development",
+    "file": "papers/from-rights-to-reality.pdf"
   }
 }
